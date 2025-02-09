@@ -1,70 +1,87 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import type { UserRole } from "@/types/auth"
+import { Card, CardContent } from "@/components/ui/card"
+import { GraduationCap, Users, UserCog } from "lucide-react"
 
-export default function RoleSelection() {
-  const [role, setRole] = useState<UserRole>("parent")
+const roles = [
+  {
+    id: "teacher",
+    title: "Teacher",
+    description: "Access your class dashboard, manage grades, and communicate with parents",
+    icon: GraduationCap,
+  },
+  {
+    id: "parent",
+    title: "Parent",
+    description: "Monitor your child's progress and communicate with teachers",
+    icon: Users,
+  },
+  {
+    id: "admin",
+    title: "Administrator",
+    description: "Manage school settings, users, and oversee all activities",
+    icon: UserCog,
+  },
+]
+
+export default function RoleSelectionPage() {
+  const router = useRouter()
+  const [selectedRole, setSelectedRole] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!selectedRole) return
+
     setIsLoading(true)
-    console.log("Selected Role", role)
-    // TODO: Implement role selection logic
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsLoading(false)
+    // Simulate role selection - replace with actual role setting
+    setTimeout(() => {
+      setIsLoading(false)
+      router.push("/dashboard")
+    }, 1000)
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-[400px]">
-        <CardHeader className="space-y-2">
-          <CardTitle className="text-3xl font-bold tracking-tight">Select Your Role</CardTitle>
-          <CardDescription>Choose your role to customize your experience</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-6">
-            <RadioGroup
-              defaultValue="parent"
-              onValueChange={(value) => setRole(value as UserRole)}
-              className="grid grid-cols-1 gap-4"
-            >
-              <div className="flex items-center space-x-2 rounded-lg border p-4">
-                <RadioGroupItem value="parent" id="parent" />
-                <Label htmlFor="parent" className="flex flex-col">
-                  <span className="font-semibold">Parent</span>
-                  <span className="text-sm text-muted-foreground">
-                    Monitor your child&#39;s progress and communicate with teachers
-                  </span>
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 rounded-lg border p-4">
-                <RadioGroupItem value="teacher" id="teacher" />
-                <Label htmlFor="teacher" className="flex flex-col">
-                  <span className="font-semibold">Teacher</span>
-                  <span className="text-sm text-muted-foreground">Manage classes and communicate with parents</span>
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 rounded-lg border p-4">
-                <RadioGroupItem value="admin" id="admin" />
-                <Label htmlFor="admin" className="flex flex-col">
-                  <span className="font-semibold">Administrator</span>
-                  <span className="text-sm text-muted-foreground">Manage the entire school system</span>
-                </Label>
-              </div>
-            </RadioGroup>
-            <Button className="w-full bg-black text-white hover:bg-black/90" disabled={isLoading}>
-              {isLoading ? "Confirming..." : "Confirm Role"}
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold">Select your role</h1>
+            <p className="text-gray-500">Choose your role to access the appropriate dashboard</p>
+          </div>
+
+          <form onSubmit={onSubmit} className="space-y-4">
+            <div className="grid gap-4">
+              {roles.map((role) => {
+                const Icon = role.icon
+                return (
+                    <Card
+                        key={role.id}
+                        className={`cursor-pointer transition-colors ${selectedRole === role.id ? "border-black" : ""}`}
+                        onClick={() => setSelectedRole(role.id)}
+                    >
+                      <CardContent className="flex items-start gap-4 p-6">
+                        <div className="rounded-full p-2 bg-gray-100">
+                          <Icon className="h-6 w-6" />
+                        </div>
+                        <div className="space-y-1">
+                          <h3 className="font-medium">{role.title}</h3>
+                          <p className="text-sm text-gray-500">{role.description}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                )
+              })}
+            </div>
+
+            <Button className="w-full" type="submit" disabled={!selectedRole || isLoading}>
+              {isLoading ? "Confirming..." : "Continue"}
             </Button>
           </form>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
   )
 }
 
