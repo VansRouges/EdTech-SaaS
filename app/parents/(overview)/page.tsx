@@ -49,7 +49,7 @@ export default function ParentDashboard() {
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const ScheduleDetails = () => (
-    <div className="space-y-4">
+    <div className="grid grid-cols-3 gap-4 space-y-4">
       {todaySchedule.map((class_) => (
         <Card key={class_.id}>
           <CardHeader>
@@ -149,7 +149,7 @@ export default function ParentDashboard() {
                 <DialogTrigger asChild>
                   <Button className="w-full mt-4">View Full Schedule</Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[625px]">
                   <DialogHeader>
                     <DialogTitle>Today's Full Schedule</DialogTitle>
                   </DialogHeader>
