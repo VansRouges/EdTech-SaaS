@@ -130,7 +130,7 @@ export default function ParentDashboard() {
         </Card>
         <Card className="col-span-3">
           <CardHeader>
-            <CardTitle>Today's Schedule</CardTitle>
+            <CardTitle>Today&#39;s Schedule</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -151,7 +151,7 @@ export default function ParentDashboard() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[625px]">
                   <DialogHeader>
-                    <DialogTitle>Today's Full Schedule</DialogTitle>
+                    <DialogTitle>Today&#39;s Full Schedule</DialogTitle>
                   </DialogHeader>
                   <ScheduleDetails />
                 </DialogContent>
@@ -163,7 +163,7 @@ export default function ParentDashboard() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerHeader className="text-left">
-                    <DrawerTitle>Today's Full Schedule</DrawerTitle>
+                    <DrawerTitle>Today&#39;s Full Schedule</DrawerTitle>
                   </DrawerHeader>
                   <ScheduleDetails />
                 </DrawerContent>

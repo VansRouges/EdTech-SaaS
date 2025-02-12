@@ -49,7 +49,7 @@ export default function LoginPage() {
         </form>
         <div className="text-center text-sm">
           <Link href="/signup" className="underline underline-offset-4 hover:text-primary">
-            Don't have an account? Sign up
+            Don&#39;t have an account? Sign up
           </Link>
         </div>
       </AuthLayout>

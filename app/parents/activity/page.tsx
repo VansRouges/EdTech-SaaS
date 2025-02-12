@@ -112,7 +112,15 @@ export default function ActivityPage() {
   )
 }
 
-function ActivityList({ activities }: { activities: typeof activities }) {
+type Activity = {
+  id: number;
+  name: string;
+  date: string;
+  status: string;
+  description: string;
+};
+
+function ActivityList({ activities }: { activities: Activity[] }) {
   return (
     <div className="space-y-4">
       {activities.map((activity) => (

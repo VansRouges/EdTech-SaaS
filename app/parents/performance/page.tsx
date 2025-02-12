@@ -5,7 +5,7 @@ import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 
 const subjects = ["Math", "Science", "English", "History", "Art"]
 
-const generateGradeData = (subject: string) => {
+const generateGradeData = () => {
     return Array.from({ length: 10 }, (_, i) => ({
         week: i + 1,
         grade: Math.floor(Math.random() * 30) + 70, // Random grade between 70 and 100
@@ -14,7 +14,7 @@ const generateGradeData = (subject: string) => {
 
 const gradeData = subjects.reduce(
     (acc, subject) => {
-        acc[subject] = generateGradeData(subject)
+        acc[subject] = generateGradeData()
         return acc
     },
     {} as Record<string, { week: number; grade: number }[]>,

@@ -25,9 +25,9 @@ export function AuthLayout({ children, title, description }: AuthLayoutProps) {
                 <div className="absolute inset-0 bg-[url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-xOOAKcDxPyvxlDygdNGtUvjEA6QHBO.png')] bg-cover bg-center opacity-50" />
                 <div className="relative h-full flex items-center justify-center text-white p-12">
                     <div className="space-y-6 max-w-lg">
-                        <h2 className="text-4xl font-bold">Keep Your Children's Success</h2>
+                        <h2 className="text-4xl font-bold">Keep Your Children&#39;s Success</h2>
                         <p className="text-lg text-gray-200">
-                            Connect with teachers, track progress, and stay involved in your child's education journey.
+                            Connect with teachers, track progress, and stay involved in your child&#39;s education journey.
                         </p>
                     </div>
                 </div>

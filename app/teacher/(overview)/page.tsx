@@ -103,7 +103,7 @@ export default function TeacherDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Today's Schedule</CardTitle>
+            <CardTitle>Today&#39;s Schedule</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -124,7 +124,7 @@ export default function TeacherDashboard() {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[625px]">
                   <DialogHeader>
-                    <DialogTitle>Today's Full Schedule</DialogTitle>
+                    <DialogTitle>Today&#39;s Full Schedule</DialogTitle>
                   </DialogHeader>
                   <ScheduleDetails />
                 </DialogContent>
@@ -136,7 +136,7 @@ export default function TeacherDashboard() {
                 </DrawerTrigger>
                 <DrawerContent>
                   <DrawerHeader className="text-left">
-                    <DrawerTitle>Today's Full Schedule</DrawerTitle>
+                    <DrawerTitle>Today&#39;s Full Schedule</DrawerTitle>
                   </DrawerHeader>
                   <div className="px-4">
                     <ScheduleDetails />

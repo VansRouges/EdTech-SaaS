@@ -129,7 +129,7 @@ export default function PaymentsPage() {
                             {isDesktop ? (
                             <Dialog>
                                 <DialogTrigger asChild>
-                                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setSelectedPayment(payment); }}>
                                     View details
                                 </DropdownMenuItem>
                                 </DialogTrigger>

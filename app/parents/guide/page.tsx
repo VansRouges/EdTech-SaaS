@@ -43,10 +43,10 @@ export default function ParentGuidePage() {
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
     <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Parent's Guide</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Parent&#39;s Guide</h2>
     </div>
     <p className="text-muted-foreground">
-        Welcome to the Parent's Guide. Here you'll find helpful articles and resources to support your child's
+        Welcome to the Parent&#39;s Guide. Here you&#39;ll find helpful articles and resources to support your child&#39;s
         educational journey.
     </p>
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+// import { Button } from "@/components/ui/button"
+// import { Input } from "@/components/ui/input"
+// import { Label } from "@/components/ui/label"
+// import { Textarea } from "@/components/ui/textarea"
+// import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const initialEvents = [
@@ -16,7 +16,7 @@ const initialEvents = [
 ]
 
 export default function SchoolEventsPage() {
-  const [events, setEvents] = useState(initialEvents)
+  const [events] = useState(initialEvents)
   // const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   // const [newEvent, setNewEvent] = useState({ title: "", date: "", description: "" })
 
