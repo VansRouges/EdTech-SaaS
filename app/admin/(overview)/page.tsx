@@ -1,3 +1,4 @@
+"use client" 
 import { BarChart3, GraduationCap, School, Users } from "lucide-react"
 import { MetricCard } from "@/components/metric-card"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

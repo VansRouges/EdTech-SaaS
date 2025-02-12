@@ -1,4 +1,5 @@
-import {
+"use client"
+import { 
   Card,
   CardHeader,
   CardTitle,
@@ -34,7 +35,7 @@ const attendanceData = [
 
 export default function ReportsPage() {
   return (
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
             <Card>
               <CardHeader>

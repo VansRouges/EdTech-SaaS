@@ -1,6 +1,9 @@
-import * as React from "react"
-import { SearchForm } from "./search-form"
-import { VersionSwitcher } from "./version-switcher"
+"use client";
+
+import * as React from "react";
+import { usePathname } from "next/navigation";
+import { SearchForm } from "./search-form";
+import { VersionSwitcher } from "./version-switcher";
 import {
     Sidebar,
     SidebarContent,
@@ -12,102 +15,30 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-// This is sample data.
+// Sample data without hardcoded isActive 
 const data = {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
         {
-            title: "Getting Started",
-            url: "#",
+            id: 1,
             items: [
-                {
-                    title: "Installation",
-                    url: "#",
-                },
-                {
-                    title: "Project Structure",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "MySchool",
-            url: "#",
-            items: [
-                {
-                    title: "Students",
-                    url: "/admin/users",
-                },
-                {
-                    title: "Classes",
-                    url: "/admin/classes",
-                },
-                {
-                    title: "School Events",
-                    url: "/admin/events",
-                    isActive: true,
-                },
-                {
-                    title: "School Reports",
-                    url: "/admin/reports",
-                },
-            ],
-        },
-        {
-            title: "Teachers",
-            url: "#",
-            items: [
-                {
-                    title: "Components",
-                    url: "#",
-                },
-                {
-                    title: "File Conventions",
-                    url: "#",
-                },
-                {
-                    title: "Functions",
-                    url: "#",
-                },
-                {
-                    title: "next.config.js Options",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Parents",
-            url: "#",
-            items: [
-                {
-                    title: "Accessibility",
-                    url: "#",
-                },
-                {
-                    title: "Fast Refresh",
-                    url: "#",
-                },
-                {
-                    title: "Next.js Compiler",
-                    url: "#",
-                },
-                {
-                    title: "Supported Browsers",
-                    url: "#",
-                },
-                {
-                    title: "Turbopack",
-                    url: "#",
-                },
+                { title: "Dashboard", url: "/parents" }, 
+                { title: "School Activities", url: "/parents/activity" },
+                { title: "Performance", url: "/parents/performance" },
+                { title: "Teachers", url: "/parents/teachers" },
+                { title: "Events", url: "/parents/events" },
+                { title: "Payments", url: "/parents/payments" },
+                { title: "Parent's Guide", url: "/parents/guide" },
             ],
         },
     ],
-}
+};
 
 export function ParentSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const name: string = "EdTech Parent"
+    const pathname = usePathname();  // Get current route path
+    const name: string = "EdTech Parent";
 
     return (
         <Sidebar {...props}>
@@ -120,19 +51,23 @@ export function ParentSidebar({ ...props }: React.ComponentProps<typeof Sidebar>
                 <SearchForm />
             </SidebarHeader>
             <SidebarContent>
-                {/* We create a SidebarGroup for each parent. */}
-                {data.navMain.map((item) => (
-                    <SidebarGroup key={item.title}>
-                        <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+                {/* SidebarGroup for navigation items */}
+                {data.navMain.map((group) => (
+                    <SidebarGroup key={group.id}>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {item.items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild isActive={item.isActive}>
-                                            <a href={item.url}>{item.title}</a>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
+                                {group.items.map((item) => {
+                                    // Dynamically set isActive based on current route
+                                    const isActive = pathname === item.url;
+
+                                    return (
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton asChild isActive={isActive}>
+                                                <a href={item.url}>{item.title}</a>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    );
+                                })}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
@@ -140,5 +75,5 @@ export function ParentSidebar({ ...props }: React.ComponentProps<typeof Sidebar>
             </SidebarContent>
             <SidebarRail />
         </Sidebar>
-    )
+    );
 }

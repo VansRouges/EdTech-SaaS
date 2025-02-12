@@ -1,5 +1,6 @@
+"use client"
 import * as React from "react"
-
+import { usePathname } from "next/navigation";
 import { SearchForm } from "./search-form"
 import { VersionSwitcher } from "./version-switcher"
 import {
@@ -15,100 +16,80 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
+// Refined data for school admin functionalities
 const data = {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
         {
-            title: "Getting Started",
-            url: "#",
+            id: 1,
+            title: "Dashboard",
             items: [
-                {
-                    title: "Installation",
-                    url: "#",
-                },
-                {
-                    title: "Project Structure",
-                    url: "#",
-                },
+                { title: "Overview", url: "/admin" },
+                { title: "Reports", url: "#" }, 
+                { title: "Events Calendar", url: "/admin/events" }
             ],
         },
         {
-            title: "MySchool",
-            url: "#",
+            id: 2,
+            title: "Academic Management",
             items: [
-                {
-                    title: "Students",
-                    url: "/admin/users",
-                },
-                {
-                    title: "Classes",
-                    url: "/admin/classes",
-                },
-                {
-                    title: "School Events",
-                    url: "/admin/events",
-                    isActive: true,
-                },
-                {
-                    title: "School Reports",
-                    url: "/admin/reports",
-                },
+                { title: "Classes", url: "/admin/classes" },
+                { title: "Subjects", url: "/admin/subjects" },
+                { title: "Timetables", url: "/admin/timetables" },
+                { title: "Exams & Grades", url: "/admin/exams" }
             ],
         },
         {
-            title: "Teachers",
-            url: "#",
+            id: 3,
+            title: "Communication",
             items: [
-                {
-                    title: "Components",
-                    url: "#",
-                },
-                {
-                    title: "File Conventions",
-                    url: "#",
-                },
-                {
-                    title: "Functions",
-                    url: "#",
-                },
-                {
-                    title: "next.config.js Options",
-                    url: "#",
-                },
+                { title: "Notices", url: "#" },
+                { title: "Messages", url: "#" }
             ],
         },
         {
-            title: "Parents",
-            url: "#",
+            id: 4,
+            title: "Personnel",
             items: [
-                {
-                    title: "Accessibility",
-                    url: "#",
-                },
-                {
-                    title: "Fast Refresh",
-                    url: "#",
-                },
-                {
-                    title: "Next.js Compiler",
-                    url: "#",
-                },
-                {
-                    title: "Supported Browsers",
-                    url: "#",
-                },
-                {
-                    title: "Turbopack",
-                    url: "#",
-                },
+                { title: "Teachers", url: "#" },
+                { title: "Staff", url: "#" },
+                { title: "Assignments", url: "#" }
             ],
         },
+        {
+            id: 5,
+            title: "Students & Parents",
+            items: [
+                { title: "Students", url: "#" },
+                { title: "Admissions", url: "#" },
+                { title: "Parents", url: "#" },
+                { title: "Attendance", url: "#" }
+            ],
+        },
+        {
+            id: 6,
+            title: "Finance",
+            items: [
+                { title: "Payments", url: "#" },
+                { title: "Fee Management", url: "#" },
+                { title: "Scholarships", url: "#" }
+            ],
+        },
+        {
+            id: 7,
+            title: "Settings",
+            items: [
+                { title: "School Profile", url: "#" },
+                { title: "User Management", url: "#" },
+                { title: "System Settings", url: "#" }
+            ],
+        }
     ],
-}
+};
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const name = "EdTech Admin"
+    const pathname = usePathname();  
+    const name = "EdTech Admin";
 
     return (
         <Sidebar {...props}>
@@ -121,19 +102,21 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
                 <SearchForm />
             </SidebarHeader>
             <SidebarContent>
-                {/* We create a SidebarGroup for each parent. */}
-                {data.navMain.map((item) => (
-                    <SidebarGroup key={item.title}>
-                        <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+                {data.navMain.map((group) => (
+                    <SidebarGroup key={group.id}>
+                        <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {item.items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild isActive={item.isActive}>
-                                            <a href={item.url}>{item.title}</a>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
+                                {group.items.map((item) => {
+                                    const isActive = pathname === item.url;
+                                    return (
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton asChild isActive={isActive}>
+                                                <a href={item.url}>{item.title}</a>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    );
+                                })}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>

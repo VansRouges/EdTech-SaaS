@@ -1,6 +1,8 @@
-import * as React from "react"
-import { SearchForm } from "./search-form"
-import { VersionSwitcher } from "./version-switcher"
+"use client"
+import * as React from "react";
+import { usePathname } from "next/navigation";
+import { SearchForm } from "./search-form";
+import { VersionSwitcher } from "./version-switcher";
 import {
     Sidebar,
     SidebarContent,
@@ -12,102 +14,68 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
     SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-// This is sample data.
 const data = {
     versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
     navMain: [
         {
-            title: "Getting Started",
+            title: "Dashboard",
             url: "#",
             items: [
-                {
-                    title: "Installation",
-                    url: "#",
-                },
-                {
-                    title: "Project Structure",
-                    url: "#",
-                },
+                { title: "Overview", url: "/teacher" },
+                { title: "My Schedule", url: "/teacher/schedule" },
             ],
         },
         {
-            title: "MySchool",
+            title: "Communication",
             url: "#",
             items: [
-                {
-                    title: "Students",
-                    url: "/admin/users",
-                },
-                {
-                    title: "Classes",
-                    url: "/admin/classes",
-                },
-                {
-                    title: "School Events",
-                    url: "/admin/events",
-                    isActive: true,
-                },
-                {
-                    title: "School Reports",
-                    url: "/admin/reports",
-                },
+                { title: "Notices", url: "/teacher/notices" },
+                { title: "Messages", url: "/teacher/messages" },
+            ],
+        },        
+        {
+            title: "Class Management",
+            url: "#",
+            items: [
+                { title: "My Classes", url: "/teacher/classes" },
+                { title: "Assignments", url: "/teacher/assignments" },
+                { title: "Attendance", url: "/teacher/attendance" },
+                { title: "Grades & Reports", url: "/teacher/grades" },
             ],
         },
         {
-            title: "Teachers",
+            title: "Student Interaction",
             url: "#",
             items: [
-                {
-                    title: "Components",
-                    url: "#",
-                },
-                {
-                    title: "File Conventions",
-                    url: "#",
-                },
-                {
-                    title: "Functions",
-                    url: "#",
-                },
-                {
-                    title: "next.config.js Options",
-                    url: "#",
-                },
+                { title: "Student List", url: "/teacher/students" },
+                { title: "Feedback", url: "#" },
             ],
         },
         {
-            title: "Parents",
+            title: "Resources",
             url: "#",
             items: [
-                {
-                    title: "Accessibility",
-                    url: "#",
-                },
-                {
-                    title: "Fast Refresh",
-                    url: "#",
-                },
-                {
-                    title: "Next.js Compiler",
-                    url: "#",
-                },
-                {
-                    title: "Supported Browsers",
-                    url: "#",
-                },
-                {
-                    title: "Turbopack",
-                    url: "#",
-                },
+                { title: "Learning Materials", url: "/teacher/materials" },
+                { title: "Exam Preparation", url: "/teacher/exams" },
+                { title: "School Events", url: "/teacher/events" },
+            ],
+        },
+        {
+            title: "Settings",
+            url: "#",
+            items: [
+                { title: "Profile Settings", url: "#" },
+                { title: "Account Security", url: "#" },
             ],
         },
     ],
-}
+};
 
 export function TeacherSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const name: string = "EdTech Teacher"
+    const pathname = usePathname();
+    const name: string = "EdTech Teacher";
 
     return (
         <Sidebar {...props}>
@@ -120,19 +88,21 @@ export function TeacherSidebar({ ...props }: React.ComponentProps<typeof Sidebar
                 <SearchForm />
             </SidebarHeader>
             <SidebarContent>
-                {/* We create a SidebarGroup for each parent. */}
-                {data.navMain.map((item) => (
-                    <SidebarGroup key={item.title}>
-                        <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+                {data.navMain.map((group) => (
+                    <SidebarGroup key={group.title}>
+                        <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {item.items.map((item) => (
-                                    <SidebarMenuItem key={item.title}>
-                                        <SidebarMenuButton asChild isActive={item.isActive}>
-                                            <a href={item.url}>{item.title}</a>
-                                        </SidebarMenuButton>
-                                    </SidebarMenuItem>
-                                ))}
+                                {group.items.map((item) => {
+                                    const isActive = pathname === item.url;
+                                    return (
+                                        <SidebarMenuItem key={item.title}>
+                                            <SidebarMenuButton asChild isActive={isActive}>
+                                                <a href={item.url}>{item.title}</a>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    );
+                                })}
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
@@ -140,5 +110,5 @@ export function TeacherSidebar({ ...props }: React.ComponentProps<typeof Sidebar
             </SidebarContent>
             <SidebarRail />
         </Sidebar>
-    )
+    );
 }
