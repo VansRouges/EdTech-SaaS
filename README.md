@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EdTech Frontend
 
-## Getting Started
+This repository contains the frontend for the EdTech application, designed to facilitate communication and academic performance tracking between parents, teachers, and students. The application provides dashboards, event updates, attendance records, and more.
 
-First, run the development server:
+## Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Environment Variables](#environment-variables)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+- **Dashboard Overview:** Real-time academic performance metrics.
+- **Notifications:** Memo and announcement system for teachers and parents.
+- **Event Management:** Track and manage school events.
+- **Attendance Tracking:** Monitor student attendance.
+- **Parental Communication:** Dedicated section for parent-teacher interactions.
+- **Role-based Access Control:** Different views for admins, teachers, and parents.
+
+## Tech Stack
+- **Framework:** Next.js
+- **Styling:** TailwindCSS, ShadCN UI
+- **Authentication:** Clerk.js
+- **Authorization:** Permit.io
+- **Backend as a Service:** Appwrite
+- **Containerization:** Docker
+
+## Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/edtech-frontend.git
+   cd edtech-frontend
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:3000`.
+
+## Usage
+
+- **Admin:** Can send memos, manage teachers, and oversee events.
+- **Teachers:** View schedules, receive notifications, and track student performance.
+- **Parents:** Monitor their children's academic progress and communicate with teachers.
+
+## Environment Variables
+Create a `.env.local` file in the root of the project and add the following variables:
+
+```env
+NEXT_PUBLIC_CLERK_FRONTEND_API=your_clerk_frontend_api
+NEXT_PUBLIC_APPWRITE_ENDPOINT=your_appwrite_endpoint
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
+NEXT_PUBLIC_PERMIT_API_KEY=your_permit_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Folder Structure
+```
+├── components/        # Reusable UI components
+├── pages/             # Application routes
+├── styles/            # Global styles and theme
+├── public/            # Static files
+├── utils/             # Utility functions
+└── docker/            # Docker configurations
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions are welcome! Please follow these steps:
 
-## Learn More
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/your-feature`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a Pull Request.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the MIT License.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+For any queries, please contact evansagina57@gmail.com.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
