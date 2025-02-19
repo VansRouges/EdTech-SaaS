@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthLayout } from "@/components/auth-layout";
 import { useAuthStore } from "@/store/auth";
+import { useProfileStore } from "@/store/profile";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,36 +24,66 @@ export default function LoginPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsLoading(true);
-    setError(null)
-
-    console.log("FormData", formData)
-
+    setError(null);
+  
+    console.log("FormData", formData);
+  
     try {
-      const response = await fetch("https://edtech-saas-backend.vercel.app/api/auth/login", {
+      // Step 1: Login Request
+      const authResponse = await fetch("https://edtech-saas-backend.vercel.app/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-
-      if (!response.ok) throw new Error("Invalid credentials");
-
-      const result = await response.json();
-      console.log("result", result)
+  
+      if (!authResponse.ok) throw new Error("Invalid credentials");
+  
+      const authData = await authResponse.json();
+      console.log("Auth Result:", authData);
+  
+      const token = authData.token;
+      setToken(token);
+  
       setUser({
-        $id: result.session.$id,
+        $id: authData.session.$id,
         name: "",
-        email: result.session.providerUid,
-      })
-      setToken(result.token);
-
-      // toast.success("Login successful!");
-      router.push("/role-selection");
+        email: authData.session.providerUid,
+      });
+  
+      // Step 2: Fetch Profile by Email
+      const profileResponse = await fetch(`https://edtech-saas-backend.vercel.app/api/profile/${formData.email}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!profileResponse.ok) throw new Error("Failed to fetch user profile");
+  
+      const profileData = await profileResponse.json();
+      console.log("Profile Data:", profileData);
+  
+      // Store profile in Zustand
+      useProfileStore.getState().setProfile(profileData.profile);
+  
+      // Step 3: Redirect based on Role
+      const userRole = profileData.profile.role;
+      if (userRole === "admin") {
+        router.push("/admin");
+      } else if (userRole === "teacher") {
+        router.push("/teacher");
+      } else if (userRole === "parent") {
+        router.push("/parents");
+      } else {
+        router.push("/role-selection");
+      }
+  
     } catch (err) {
-      const error = err as Error
-      setError(error.message || "An error occurred")
-      // toast.error(error instanceof Error ? error.message : "Login failed");
+      const error = err as Error;
+      setError(error.message || "An error occurred");
     } finally {
       setIsLoading(false);
     }
