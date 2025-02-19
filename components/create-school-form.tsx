@@ -140,6 +140,8 @@ export function CreateSchoolForm() {
     }
   }
 
+  console.log("Loading", isLoading)
+
   const currentStepFields = steps[currentStep].fields
 
   return (
@@ -316,7 +318,7 @@ export function CreateSchoolForm() {
                 Previous
               </Button>
             )}
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit">
                 {
                     
                     currentStep === steps.length - 1 ? "Submit" : "Next"

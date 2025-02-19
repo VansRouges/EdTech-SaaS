@@ -4,6 +4,7 @@ import { MetricCard } from "@/components/metric-card"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { useProfileStore } from "@/store/profile";
 
 const performanceData = [
   { month: "Jan", average: 85 },
@@ -33,10 +34,14 @@ const upcomingEvents = [
 ]
 
 export default function AdminDashboard() {
+  const { profile } = useProfileStore();
+  console.log("Profile:", profile);
+
   return (
       <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+            <h1>You are logged in as <b>{profile?.name}</b></h1>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <MetricCard
