@@ -7,62 +7,88 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { AuthLayout } from "@/components/auth-layout"
+import { useAuthStore } from "@/store/auth" // Import Zustand store
 
 export default function SignupPage() {
   const router = useRouter()
+  const { setUser, setToken } = useAuthStore() // Zustand function to store user state
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setIsLoading(true)
+    setError(null)
 
-    // Simulate signup - replace with actual registration
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    const userData = {
+      name: `${formData.get("firstName")} ${formData.get("lastName")}`,
+      email: formData.get("email"),
+      password: formData.get("password"),
+    }
+
+    try {
+      const response = await fetch("https://edtech-saas-backend.vercel.app/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error("Signup failed. Please try again.")
+      }
+
+      console.log("Signup successful:", result)
+
+      // Store user in Zustand
+      setUser({
+        $id: result.user.$id,
+        name: result.user.name,
+        email: result.user.email,
+      })
+      setToken(result.token);
+
+      router.push("/create")
+    } catch (err: any) {
+      setError(err.message || "An error occurred")
+    } finally {
       setIsLoading(false)
-      router.push("/role-selection")
-    }, 1000)
+    }
   }
 
   return (
-      <AuthLayout title="Create an account" description="Enter your details to get started">
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div className="grid gap-4 grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="firstName">First name</Label>
-              <Input id="firstName" placeholder="John" disabled={isLoading} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last name</Label>
-              <Input id="lastName" placeholder="Doe" disabled={isLoading} required />
-            </div>
+    <AuthLayout title="Create an account" description="Enter your details to get started">
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div className="grid gap-4 grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="firstName">First name</Label>
+            <Input name="firstName" id="firstName" placeholder="John" disabled={isLoading} required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-                id="email"
-                placeholder="name@example.com"
-                type="email"
-                autoCapitalize="none"
-                autoComplete="email"
-                autoCorrect="off"
-                disabled={isLoading}
-                required
-            />
+            <Label htmlFor="lastName">Last name</Label>
+            <Input name="lastName" id="lastName" placeholder="Doe" disabled={isLoading} required />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" disabled={isLoading} required />
-          </div>
-          <Button className="w-full" type="submit" disabled={isLoading}>
-            {isLoading ? "Creating account..." : "Create account"}
-          </Button>
-        </form>
-        <div className="text-center text-sm">
-          <Link href="/login" className="underline underline-offset-4 hover:text-primary">
-            Already have an account? Sign in
-          </Link>
         </div>
-      </AuthLayout>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input name="email" id="email" placeholder="name@example.com" type="email" autoComplete="email" disabled={isLoading} required />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <Input name="password" id="password" type="password" disabled={isLoading} required />
+        </div>
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+        <Button className="w-full" type="submit" disabled={isLoading}>
+          {isLoading ? "Creating account..." : "Create account"}
+        </Button>
+      </form>
+      <div className="text-center text-sm">
+        <Link href="/login" className="underline underline-offset-4 hover:text-primary">
+          Already have an account? Sign in
+        </Link>
+      </div>
+    </AuthLayout>
   )
 }
-

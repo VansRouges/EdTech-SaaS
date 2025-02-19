@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { GraduationCap, Users, UserCog } from "lucide-react"
+import { GraduationCap, Users } from "lucide-react"
 
 const roles = [
   {
@@ -18,12 +18,6 @@ const roles = [
     title: "Parent",
     description: "Monitor your child's progress and communicate with teachers",
     icon: Users,
-  },
-  {
-    id: "admin",
-    title: "Administrator",
-    description: "Manage school settings, users, and oversee all activities",
-    icon: UserCog,
   },
 ]
 
