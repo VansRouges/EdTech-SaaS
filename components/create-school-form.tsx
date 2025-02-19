@@ -80,7 +80,7 @@ export function CreateSchoolForm() {
                 email: formData.email,
                 proprietor: formData.proprietor,
                 proprietorEducation: formData.proprietorEducation,
-                moeRegstrationId: formData.moeRegstrationId,
+                moeRegistrationId: formData.moeRegstrationId,
                 cacId: formData.cacId,
                 userId: user?.$id,
                 status: "pending"
@@ -146,6 +146,7 @@ export function CreateSchoolForm() {
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle>Create Your School - Step {currentStep + 1}</CardTitle>
+        {error && <p className="text-red-500 text-sm">{error}</p>}
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -315,7 +316,7 @@ export function CreateSchoolForm() {
                 Previous
               </Button>
             )}
-            <Button type="submit">
+            <Button type="submit" disabled={isLoading}>
                 {
                     
                     currentStep === steps.length - 1 ? "Submit" : "Next"

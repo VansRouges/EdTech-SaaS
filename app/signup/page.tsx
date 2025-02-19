@@ -51,8 +51,10 @@ export default function SignupPage() {
       setToken(result.token);
 
       router.push("/create")
-    } catch (err: any) {
-      setError(err.message || "An error occurred")
+    } catch (err) {
+      const error = err as Error
+      setError(error.message || "An error occurred")
+      console.error("Error:", error)
     } finally {
       setIsLoading(false)
     }
