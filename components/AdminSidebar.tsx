@@ -51,16 +51,16 @@ const data = {
             id: 4,
             title: "Personnel",
             items: [
-                { title: "Teachers", url: "#" },
-                { title: "Staff", url: "#" },
-                { title: "Assignments", url: "#" }
+                { title: "Teachers", url: "/admin/teachers" },
+                { title: "Staff", url: "/admin/staff" },
+                { title: "Assignments", url: "/admin/assignments" }
             ],
         },
         {
             id: 5,
             title: "Students & Parents",
             items: [
-                { title: "Students", url: "#" },
+                { title: "Students", url: "/admin/students" },
                 { title: "Admissions", url: "#" },
                 { title: "Parents", url: "#" },
                 { title: "Attendance", url: "#" }
